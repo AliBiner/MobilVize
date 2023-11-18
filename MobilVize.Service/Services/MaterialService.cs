@@ -37,13 +37,14 @@ namespace MobilVize.Service.Services
                 mapped.IsActive=true;
                 mapped.UpdateDate = DateTime.Now;
                 await AddAsyncTask(mapped);
+                
                 foreach (var item in dto.PropertyName)
                 {
                     var prop = new Property { Id = Guid.NewGuid(),Name=item,MaterialId=mapped.Id,CreateDate=DateTime.Now,UpdateDate=DateTime.Now };
                     await _propertyRepository.AddAsyncTask(prop);
                     
                 }
-                await _unitOfWork.CommitAsyncTask();
+                
                 return CustomResponseDto<Material>.Success(200);
             }
             catch (Exception e)
